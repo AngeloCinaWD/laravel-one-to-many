@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'mainController@home') -> name('home');
+
+Route::get('/employeeIndex', 'mainController@employeeIndex') -> name('employeeIndex');
