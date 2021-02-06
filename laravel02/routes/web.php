@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'mainController@home') -> name('home');
 
 Route::get('/employeeIndex', 'mainController@employeeIndex') -> name('employeeIndex');
+
+Route::get('/employeeShow/{id}', 'mainController@employeeShow') -> name('employeeShow');
+
+Route::get('/taskIndex', 'mainController@taskIndex') -> name('taskIndex');
+
+Route::get('/taskShow/{id}', 'mainController@taskShow') -> name('taskShow');
