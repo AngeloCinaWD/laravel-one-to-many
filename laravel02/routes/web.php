@@ -22,3 +22,7 @@ Route::get('/employeeShow/{id}', 'mainController@employeeShow') -> name('employe
 Route::get('/taskIndex', 'mainController@taskIndex') -> name('taskIndex');
 
 Route::get('/taskShow/{id}', 'mainController@taskShow') -> name('taskShow');
+
+Route::get('/typologyIndex', 'mainController@typologyIndex') -> name('typologyIndex');
+
+Route::get('/typologyShow/{id}', 'mainController@typologyShow') -> name('typologyShow');

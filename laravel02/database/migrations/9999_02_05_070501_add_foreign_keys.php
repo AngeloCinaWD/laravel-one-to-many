@@ -16,7 +16,19 @@ class AddForeignKeys extends Migration
       Schema::table('tasks', function (Blueprint $table) {
         $table -> foreign('employee_id', 'task-employee')
                -> references('id')
-               -> on('employees');    
+               -> on('employees');
+      });
+
+      Schema::table('task_typology', function (Blueprint $table) {
+        $table -> foreign('task_id', 'tt-task')
+               -> references('id')
+               -> on('tasks');
+      });
+
+      Schema::table('task_typology', function (Blueprint $table) {
+        $table -> foreign('typology_id', 'tt-typology')
+               -> references('id')
+               -> on('typologies');
       });
     }
 
@@ -27,6 +39,14 @@ class AddForeignKeys extends Migration
      */
     public function down()
     {
+      Schema::table('task_typology', function (Blueprint $table) {
+        $table -> dropForeign('tt-typology');
+      });
+
+      Schema::table('task_typology', function (Blueprint $table) {
+        $table -> dropForeign('tt-task');
+      });
+
       Schema::table('tasks', function (Blueprint $table) {
         $table -> dropForeign('task-employee');
       });
