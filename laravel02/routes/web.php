@@ -23,6 +23,10 @@ Route::get('/taskIndex', 'mainController@taskIndex') -> name('taskIndex');
 
 Route::get('/taskShow/{id}', 'mainController@taskShow') -> name('taskShow');
 
+Route::get('/taskCreate', 'mainController@taskCreate') -> name('taskCreate');
+
+Route::post('/taskStore', 'mainController@taskStore') -> name('taskStore');
+
 Route::get('/typologyIndex', 'mainController@typologyIndex') -> name('typologyIndex');
 
 Route::get('/typologyShow/{id}', 'mainController@typologyShow') -> name('typologyShow');

@@ -18,6 +18,7 @@
     @foreach ($typology -> tasks as $task)
       <li>
         <a href="{{route('taskShow', $task -> id)}}">{{$task -> title}}</a>
+        (Employee: <a href="{{route('employeeShow', $task -> employee -> id)}}">{{$task -> employee -> name}} {{$task -> employee -> lastname}}</a>)
       </li>
     @endforeach
   </ul>

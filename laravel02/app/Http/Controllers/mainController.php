@@ -37,6 +37,28 @@ class mainController extends Controller
     return view('pages.taskShow', compact('task'));
   }
 
+  public function taskCreate() {
+    $employees = Employee::all();
+    $typologies = Typology::all();
+    return view('pages.taskCreate', compact('employees', 'typologies'));
+  }
+
+  public function taskStore(Request $request) {
+    $data = $request -> all();
+    // dd($data);
+    $employee = Employee::findOrFail($data['employee_id']);
+    // dd($employee);
+    $task = Task::make($request -> all());
+    $task -> employee() -> associate($employee);
+    $task -> save();
+
+    // dd($task);
+
+    $typologies = Typology::find($data['typologies']);
+    $task -> typologies() -> attach($typologies);
+    return redirect() -> route('taskIndex');
+  }
+
   public function typologyIndex() {
     $typologies = Typology::all();
     return view('pages.typologyIndex', compact('typologies'));

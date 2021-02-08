@@ -7,12 +7,14 @@
 
   <h1>Tasks</h1>
 
+  <a href="{{route('taskCreate')}}">CREATE NEW TASK</a>
   <ul>
     @foreach ($tasks as $task)
       <li>
         <a href="{{route('taskShow', $task -> id)}}">{{$task -> title}}</a>
 
         ({{$task -> employee -> lastname}})
+        (Typologies: {{count($task -> typologies)}})
       </li>
     @endforeach
   </ul>
