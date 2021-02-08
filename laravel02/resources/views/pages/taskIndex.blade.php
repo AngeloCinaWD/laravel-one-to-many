@@ -15,6 +15,8 @@
 
         ({{$task -> employee -> lastname}})
         (Typologies: {{count($task -> typologies)}})
+
+        <a href="{{route('taskEdit', $task -> id)}}">Edit</a>
       </li>
     @endforeach
   </ul>

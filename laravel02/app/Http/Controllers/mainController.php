@@ -14,6 +14,7 @@ class mainController extends Controller
     return view('pages.home');
   }
 
+/////// Employee
   public function employeeIndex() {
 
     $employees = Employee::all();
@@ -26,6 +27,7 @@ class mainController extends Controller
     return view('pages.employeeShow', compact('employee'));
   }
 
+  /////// Task
   public function taskIndex() {
     $tasks = Task::all();
     return view('pages.taskIndex', compact('tasks'));
@@ -59,6 +61,29 @@ class mainController extends Controller
     return redirect() -> route('taskIndex');
   }
 
+  public function taskEdit($id) {
+    $task = Task::findOrFail($id);
+    $employees = Employee::all();
+    $typologies = Typology::all();
+    return view('pages.taskEdit', compact('employees', 'typologies', 'task'));
+  }
+
+  public function taskUpdate(Request $request, $id) {
+    $data = $request -> all();
+    // dd($data);
+    $employee = Employee::findOrFail($data['employee_id']);
+    $task = Task::findOrFail($id);
+    $task -> update($data);
+    $task -> employee() -> associate($employee);
+    $task -> save();
+
+    $typologies = Typology::find($data['typologies']);
+    $task -> typologies() -> sync($typologies);
+
+    return redirect() -> route('taskShow', $task -> id);
+  }
+
+/////// Typology
   public function typologyIndex() {
     $typologies = Typology::all();
     return view('pages.typologyIndex', compact('typologies'));
