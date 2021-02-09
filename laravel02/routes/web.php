@@ -45,3 +45,11 @@ Route::post('/taskUpdate/{id}', 'mainController@taskUpdate') -> name('taskUpdate
 Route::get('/typologyIndex', 'mainController@typologyIndex') -> name('typologyIndex');
 
 Route::get('/typologyShow/{id}', 'mainController@typologyShow') -> name('typologyShow');
+
+Route::get('/typologyCreate', 'mainController@typologyCreate') -> name('typologyCreate');
+
+Route::post('/typologyStore', 'mainController@typologyStore') -> name('typologyStore');
+
+Route::get('/typologyEdit/{id}', 'mainController@typologyEdit') -> name('typologyEdit');
+
+Route::post('/typologyUpdate/{id}', 'mainController@typologyUpdate') -> name('typologyUpdate');

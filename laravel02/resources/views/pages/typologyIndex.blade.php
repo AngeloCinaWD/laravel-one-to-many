@@ -4,12 +4,16 @@
 
 <button type="button" name="button">
   <a href="{{route('home')}}">home</a>
-</button>
+</button> <br><br>
+
+<a href="{{route('typologyCreate')}}">New typology</a>
 
 <ul>
   @foreach ($typologies as $typology)
     <li>
       <a href="{{route('typologyShow', $typology -> id)}}"><h2>{{$typology -> name}} {{$typology -> lastname}}</h2></a>
+
+      <a href="{{route('typologyEdit', $typology -> id)}}">Edit</a> <br><br>
 
       Tasks: {{count($typology -> tasks)}}
 

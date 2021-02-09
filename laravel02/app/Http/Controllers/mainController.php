@@ -46,7 +46,7 @@ class mainController extends Controller
     // dd($request -> all(), $id);
     $employee = Employee::findOrFail($id);
     $employee -> update($request -> all());
-    return redirect() -> route('employeeShow', $employee -> id); 
+    return redirect() -> route('employeeShow', $employee -> id);
   }
 
   /////// Task
@@ -115,5 +115,38 @@ class mainController extends Controller
     // dd($id);
     $typology = Typology::findOrFail($id);
     return view('pages.typologyShow', compact('typology'));
+  }
+
+  public function typologyCreate() {
+    $tasks = Task::all();
+    return view('pages.typologyCreate', compact('tasks'));
+  }
+
+  public function typologyStore(Request $request) {
+    $data = $request -> all();
+    // dd($data);
+    $typology = Typology::create($request -> all());
+    $tasks = Task::findOrFail($data['tasks']);
+    $typology -> tasks() -> attach($tasks);
+    return redirect() -> route('typologyIndex');
+  }
+
+  public function typologyEdit($id) {
+    $tasks = Task::all();
+    $typology = Typology::findOrFail($id);
+    return view('pages.typologyEdit', compact('tasks', 'typology'));
+  }
+
+  public function typologyUpdate(Request $request, $id) {
+    $data = $request -> all();
+    // dd($data, $id);
+
+    $typology = Typology::findOrFail($id);
+    $typology -> update($data);
+
+    $tasks = Task::findOrFail($data['tasks']);
+    $typology -> tasks() -> sync($tasks);
+
+    return redirect() -> route('typologyShow', $typology -> id);
   }
 }
