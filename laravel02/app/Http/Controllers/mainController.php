@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Employee;
 use App\Task;
@@ -33,6 +34,11 @@ class mainController extends Controller
 
   public function employeeStore(Request $request) {
     // dd($request -> all());
+    Validator::make($request -> all(), [
+      'name' => 'required|min:5',
+      'lastname' => 'required|min:5',
+    ]) -> validate();
+
     Employee::create($request -> all());
     return redirect() -> route('employeeIndex');
   }
