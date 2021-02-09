@@ -10,6 +10,8 @@
 
   <h1>{{$employee -> name}} {{$employee -> lastname}}</h1>
 
+  <h2>{{$employee -> dateOfBirth}}</h2>
+
   <h3>Employee id: {{$employee -> id}}</h3>
 
   <h2>Tasks:</h2>

@@ -27,6 +27,28 @@ class mainController extends Controller
     return view('pages.employeeShow', compact('employee'));
   }
 
+  public function employeeCreate() {
+    return view ('pages.employeeCreate');
+  }
+
+  public function employeeStore(Request $request) {
+    // dd($request -> all());
+    Employee::create($request -> all());
+    return redirect() -> route('employeeIndex');
+  }
+
+  public function employeeEdit($id) {
+    $employee = Employee::findOrFail($id);
+    return view('pages.employeeEdit', compact('employee'));
+  }
+
+  public function employeeUpdate(Request $request, $id) {
+    // dd($request -> all(), $id);
+    $employee = Employee::findOrFail($id);
+    $employee -> update($request -> all());
+    return redirect() -> route('employeeShow', $employee -> id); 
+  }
+
   /////// Task
   public function taskIndex() {
     $tasks = Task::all();

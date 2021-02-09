@@ -20,6 +20,14 @@ Route::get('/employeeIndex', 'mainController@employeeIndex') -> name('employeeIn
 
 Route::get('/employeeShow/{id}', 'mainController@employeeShow') -> name('employeeShow');
 
+Route::get('/employeeCreate', 'mainController@employeeCreate') -> name('employeeCreate');
+
+Route::post('/employeeStore', 'mainController@employeeStore') -> name('employeeStore');
+
+Route::get('/employeeEdit/{id}', 'mainController@employeeEdit') -> name('employeeEdit');
+
+Route::post('/employeeUpdate/{id}', 'mainController@employeeUpdate') -> name('employeeUpdate');
+
 //Task
 Route::get('/taskIndex', 'mainController@taskIndex') -> name('taskIndex');
 
