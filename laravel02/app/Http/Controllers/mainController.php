@@ -105,7 +105,12 @@ class mainController extends Controller
     $task -> employee() -> associate($employee);
     $task -> save();
 
-    $typologies = Typology::find($data['typologies']);
+    if (array_key_exists('typologies', $data)) {
+      $typologies = Typology::find($data['typologies']);
+    } else {
+      $typologies = [];
+    }
+        
     $task -> typologies() -> sync($typologies);
 
     return redirect() -> route('taskShow', $task -> id);
@@ -150,7 +155,12 @@ class mainController extends Controller
     $typology = Typology::findOrFail($id);
     $typology -> update($data);
 
-    $tasks = Task::findOrFail($data['tasks']);
+    if (array_key_exists('tasks', $data)) {
+      $tasks = Task::findOrFail($data['tasks']);
+    } else {
+      $tasks = [];
+    }
+
     $typology -> tasks() -> sync($tasks);
 
     return redirect() -> route('typologyShow', $typology -> id);
