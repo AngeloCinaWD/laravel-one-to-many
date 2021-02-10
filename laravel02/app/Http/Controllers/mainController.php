@@ -11,6 +11,18 @@ use App\Typology;
 
 class mainController extends Controller
 {
+
+  protected $baseValidation = [ // posso farmi una proprietà con array contenente i campi da validare
+    'name' => 'required|string|min:5|max:255',
+    'description' => 'required|string|min:10',
+    'priority' => 'required|integer',
+    'typologies' => 'required' // costringo l'utente a selezionare almeno una typology
+  ];
+
+  protected function personalPriority($priority) { // funzione per la validation custo del campo priority, ritorna vero se il numero inserito è compreso fra 1 e 5
+    return $priority >=1 && $priority <= 5;
+  }
+
   public function home() {
     return view('pages.home');
   }
@@ -74,9 +86,28 @@ class mainController extends Controller
   }
 
   public function taskStore(Request $request) {
-    $data = $request -> all();
+    // $data = $request -> all();
     // dd($data);
-    $employee = Employee::findOrFail($data['employee_id']);
+
+    // $data = $request->validate([ //senza proprietà con array contenente i campi da validare
+    //   'name' => 'required|string|min:5|max:255',
+    //   'description' => 'required|string|min:10',
+    //   'priority' => 'required|integer',
+    //   'typologies' => 'required'
+    // ]);
+
+    $data = $request->validate($this -> baseValidation); // richiamo la proprietà con i campi da validare
+
+    // if ($data['priority'] < 1 || $data['priority'] > 5) { // priority custom senza richiamare la funzione
+    //   return redirect() -> back() -> withErrors(['priority' => 'out of range']);
+    // }
+
+    if (!$this-> personalPriority($data['priority'])) { // priority custom con richiamo funzione personalPriority con notOperator perchè se il numero passato non è compreso fra 1 e 5 la funzione restituisce falso che con il not operator diventa vero e quindi mi entra nell'if block e mi lancia il messaggio di errore
+      return redirect() -> back() -> withErrors(['priority' => 'out of range']);
+    }
+
+    // $employee = Employee::findOrFail($data['employee_id']);
+    $employee = Employee::findOrFail($request -> get('employee_id')); // dato che nella validate non sto validando employee_id metto $request -> get()
     // dd($employee);
     $task = Task::make($request -> all());
     $task -> employee() -> associate($employee);
@@ -84,7 +115,8 @@ class mainController extends Controller
 
     // dd($task);
 
-    $typologies = Typology::find($data['typologies']);
+    // $typologies = Typology::find($data['typologies']);
+    $typologies = Typology::find($request -> get('typologies'));
     $task -> typologies() -> attach($typologies);
     return redirect() -> route('taskIndex');
   }
@@ -110,7 +142,7 @@ class mainController extends Controller
     } else {
       $typologies = [];
     }
-        
+
     $task -> typologies() -> sync($typologies);
 
     return redirect() -> route('taskShow', $task -> id);
@@ -151,6 +183,11 @@ class mainController extends Controller
   public function typologyUpdate(Request $request, $id) {
     $data = $request -> all();
     // dd($data, $id);
+
+    Validator::make($data, [
+      'name' => 'required|min:5|max:15',
+      'description' => 'required|min:5|max:20'
+    ]) -> validate();
 
     $typology = Typology::findOrFail($id);
     $typology -> update($data);

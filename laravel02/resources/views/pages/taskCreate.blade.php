@@ -3,6 +3,10 @@
 @section('content')
   <h1>New task</h1>
 
+  @error ('priority')
+    <h4>{{$errors->first()}}</h4>
+  @enderror
+
   <form class="" action="{{route('taskStore')}}" method="post">
 
     @csrf
