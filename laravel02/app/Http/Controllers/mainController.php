@@ -13,7 +13,7 @@ class mainController extends Controller
 {
 
   protected $baseValidation = [ // posso farmi una proprietà con array contenente i campi da validare
-    'name' => 'required|string|min:5|max:255',
+    'title' => 'required|string|min:5|max:255',
     'description' => 'required|string|min:10',
     'priority' => 'required|integer',
     'typologies' => 'required' // costringo l'utente a selezionare almeno una typology
@@ -90,7 +90,7 @@ class mainController extends Controller
     // dd($data);
 
     // $data = $request->validate([ //senza proprietà con array contenente i campi da validare
-    //   'name' => 'required|string|min:5|max:255',
+    //   'title' => 'required|string|min:5|max:255',
     //   'description' => 'required|string|min:10',
     //   'priority' => 'required|integer',
     //   'typologies' => 'required'
